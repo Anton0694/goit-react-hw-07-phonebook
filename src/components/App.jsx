@@ -5,6 +5,8 @@ import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { ContainerApp } from './App.styled';
+import { fetchContacts } from './redux/operations'
+import { useEffect } from 'react';
 
 import React from 'react';
 
@@ -34,6 +36,9 @@ export default function App() {
     dispatch(deleteContact(id));
   };
 
+    useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <ContainerApp>

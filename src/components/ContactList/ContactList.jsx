@@ -18,7 +18,7 @@ const filteredContacts = filter
       )
     : contacts;
 
-  
+  console.log(filteredContacts)
   return (
     <ContactsList contact={contacts}>
       {filteredContacts.map(({name, phone, id})=> (
