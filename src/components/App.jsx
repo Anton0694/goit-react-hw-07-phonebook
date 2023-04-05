@@ -1,19 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact, deleteContact } from './redux/contactSlice';
-import { getContacts } from './redux/selectors';
+import { addContact, deleteContact } from './redux/operations';
+import { selectContacts } from './redux/selectors';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { ContainerApp } from './App.styled';
-import { nanoid } from 'nanoid';
+
 import React from 'react';
 
 export default function App() {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   
- 
-
   const onSubmitHandler = (data) => {
     const isContactExists = contacts.some(
       (contact) => contact.name === data.name
@@ -25,9 +23,9 @@ export default function App() {
     }
 
     const contact = {
-      id: nanoid(),
+      id: data.id,
       name: data.name,
-      number: data.number,
+      phone: data.phone,
     };
     dispatch(addContact(contact));
   };

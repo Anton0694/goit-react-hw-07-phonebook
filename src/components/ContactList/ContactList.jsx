@@ -1,12 +1,15 @@
 import { ContactsList, ContactsListItem, ContactListText, Button } from './ContactList.styled'
 import { useDispatch,useSelector } from 'react-redux';
-import { deleteContact } from '../redux/contactSlice';
-import {  getContacts, getFilter } from '../redux/selectors';
+import { deleteContact } from '../redux/operations';
+import { selectContacts, selectFilter, selectDeletingId } from '../redux/selectors';
     
-export default function ContactList() {
+export default function ContactList( ) {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-    const filter = useSelector(getFilter);
+  
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
+  
+  const deletingId = useSelector(selectDeletingId);
 
 
 const filteredContacts = filter
@@ -17,16 +20,15 @@ const filteredContacts = filter
 
   
   return (
-    <ContactsList  contacts={filteredContacts} >
-      {filteredContacts.map(({ id, name, number }) => (
+    <ContactsList contact={contacts}>
+      {filteredContacts.map(({name, phone, id})=> (
         <ContactsListItem key={id}>
-          <ContactListText>{`${name}: ${number}`}</ContactListText>
+          <ContactListText>{`${name}: ${phone}`}</ContactListText>
           <Button
-        type="button"
-            onClick={() =>
-              dispatch(deleteContact({ id }))
-            }>
-        Delete
+            disabled={id === deletingId}
+            type="button"
+            onClick={() => dispatch(deleteContact(id))}>
+            Delete
           </Button>
           
         </ContactsListItem>

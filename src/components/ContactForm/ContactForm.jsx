@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDispatch } from 'react-redux';
-import { addContact } from '../redux/contactSlice';
-import { nanoid } from 'nanoid';
+import { addContact } from '../redux/operations';
+
 
 
 import {Form, Input, Label, Button } from "./ContactForm.styled"
@@ -9,13 +9,13 @@ import {Form, Input, Label, Button } from "./ContactForm.styled"
 
 export default function ContactForm ()  {
   const [name, setName] = useState('')
-  const [number, setNumber] = useState('')
+  const [phone, setPhone] = useState('')
 
     const dispatch = useDispatch();
  
   const handleSubmit = event => {
        event.preventDefault();
-        dispatch(addContact({ name, number, id:nanoid() }));
+        dispatch(addContact({ name, phone }));
        reset();
   }  
   
@@ -26,8 +26,8 @@ export default function ContactForm ()  {
         setName(value)
         break;
       
-      case 'number':
-        setNumber(value)
+      case 'phone':
+        setPhone(value)
         break;
       default:
         return
@@ -36,7 +36,7 @@ export default function ContactForm ()  {
   
   const  reset = () => {
     setName('')
-    setNumber('')
+    setPhone('')
   }  
   
      
@@ -59,8 +59,8 @@ export default function ContactForm ()  {
                <Input
                  onChange={handleInputChange}
                  type="tel"
-                 value={number}
-                 name="number"
+                 value={phone}
+                 name="phone"
                 
                  pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                  title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
